@@ -7,7 +7,7 @@ The logistic regression is a classification model used for binary classification
 To do so, 1st hidden layer has been filled with 6-neurons and 2nd layer(output layer) has only 1-neuron. As focus is to
 do binary classification, logistic (sigmoid) function has been given special place as an activation function. Moreover we 
 have to classify as {0,1} also acts as a satisfactory reason for using sigmoid function.
-
+In example, we have assumed 5 training examples and 4 input features.
 
 ----------------------------------------------------------------------------------------------------------------------------
 Limitations to be taken care of:
@@ -27,7 +27,7 @@ the steps taken are very aggressive which can even diverge (sometimes) the cost 
 
 2.Value of b can be set as zero as it is just a bias term (an intercept) which would not change the predictions.
 
-3.As we decrease the no, of iterations, the accuracy would tend to become smaller which is a proof of the fact that the assumed 
-no. of iterations are not sufficient enough to converge it. In other wordds, there is a scope of even more convergence.
+3.As we decrease the no. of iterations, the accuracy would tend to become smaller which is a declaration that the assumed 
+no. of iterations are not sufficient enough to converge it. In other words, there is a scope of even more convergence.
 
 ------------------------------------------------------------------------------------------------------------------------------
