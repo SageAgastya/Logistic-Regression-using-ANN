@@ -18,6 +18,7 @@ would tend to become zero. Hence, the updates in the gradient descent update rul
 will be very slow.
 
 It is said that it is more better to initialize W as the points lying over a Gaussian Distribution.
+
 ------------------------------------------------------------------------------------------------------------------------------
 Observations:
 
@@ -28,4 +29,5 @@ the steps taken are very aggressive which can even diverge (sometimes) the cost 
 
 3.As we decrease the no, of iterations, the accuracy would tend to become smaller which is a proof of the fact that the assumed 
 no. of iterations are not sufficient enough to converge it. In other wordds, there is a scope of even more convergence.
+
 ------------------------------------------------------------------------------------------------------------------------------
