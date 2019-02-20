@@ -1,12 +1,12 @@
 #this is implementation of Logistic Regression for Binary Classification using 2-layer Neural Network
 import numpy as np
 from scipy.stats import logistic
-from sklearn import preprocessing
+from sklearn import preprocessing             #used only to preprocess the data
 
-def sigm(z):
+def sigm(z):                                  #returns sigmoid 
     return logistic.cdf(z)
 
-def get_Xy():
+def get_Xy():                                 #training set
     X = np.array([[66, 11, 65, 50, 80],
                   [22, 22, 99, 33, 20],
                   [83, 70, 70, 12, 40],
@@ -18,7 +18,7 @@ def get_Xy():
 
     return X_scaled,y
 
-def test_data():
+def test_data():                                  #testing set
     X = np.array([[60, 13, 75, 55, 80],
                   [21, 26, 90, 43, 30],
                   [70, 75, 110, 22, 30],
@@ -40,7 +40,7 @@ def init_para(no_units, no_features):       #1st layer has 6 units, 2nd layer/ou
 
 
 
-def train(iterations,confidence):
+def train(iterations,confidence):                     #scratch implementation to train the ANN
     no_units=6
     no_features=4
     W1,b1,W2,b2=init_para(no_units,no_features)
@@ -52,8 +52,8 @@ def train(iterations,confidence):
         Z2 = np.dot(W2, A1) + b2
         A2 = logistic.cdf(Z2)  # foreprop ends...
 
-        logprobs = np.multiply(np.log(A2), y) + np.multiply((1 - y), np.log(1 - A2))
-        cost = -np.sum(logprobs) / float(m)  # cost function...
+        log = np.multiply(np.log(A2), y) + np.multiply((1 - y), np.log(1 - A2))   #cross entropy function
+        cost = -np.sum(log) / float(m)  # cost function...
 
         # dA2 = -(y/A2)+((1-y)/(1-A2))         #back prop begins...
         dZ2 = A2 - y
@@ -63,7 +63,7 @@ def train(iterations,confidence):
         dZ1 = np.multiply(np.dot(W2.T,dZ2),(1-np.power(A1,2)))
         dW1 = (np.dot(dZ1, X.T)) / m
         db1 = np.sum(dZ1, axis=1, keepdims=True)  # backprop ends...
-        print cost
+        print (cost)
         W1 = W1 - confidence * dW1  # update begins...
         b1 = b1 - confidence * db1
         W2 = W2 - confidence * dW2
@@ -72,37 +72,37 @@ def train(iterations,confidence):
     return W1,b1,W2,b2
 
 
-def predict():
-    iterations=20000
-    confidence=0.001
-    W1,b1,W2,b2=train(iterations,confidence)
+def predict():                          # predicts on test data
+    iterations=20000                       #learning rate
+    confidence=0.001                    
+    W1,b1,W2,b2=train(iterations,confidence)   #asking parameters from trained ANN
     X,y=test_data()                                 # X--->test_X  ,  y--->test_y
-    Z1=np.dot(W1,X)+b1
-    A1 = sigm(Z1)
-    Z2=np.dot(W2,A1)+b2
-    A2=sigm(Z2)
+    Z1=np.dot(W1,X)+b1                
+    A1 = sigm(Z1)                                  #1st layer o/p
+    Z2=np.dot(W2,A1)+b2                            
+    A2=sigm(Z2)                                    #2nd layer o/p
 
 
-    A2=np.squeeze(A2)
-    y=np.squeeze(y)
-    corr=0
+    A2=np.squeeze(A2)                              #making it rank-1 numpy array
+    y=np.squeeze(y)                                 
+    corr=0                                        #initiliaze the correct outputs
 
     for j in range(len(y)):
-        A2[j]=1 if A2[j]>0.5 else 0
+        A2[j]=1 if A2[j]>0.5 else 0           #criteria to make binary decision
         y[j]=1  if y[j]>0.5 else 0
 
 
     for i in range(len(y)):
-        if (A2[i]-y[i]==0):
+        if (A2[i]-y[i]==0):                     #checking the total correct o/p
             corr += 1
 
 
-    accuracy=(corr*100.0)/len(y)
+    accuracy=(corr*100.0)/len(y)               #accuracy over test data 
     return accuracy
 
 
-accu=predict()
-print accu
+accu=predict()                             
+print (""accuracy:",str(accu)+"%")                                   #accuracy is printed(for now, it is 80%)
 
 
 
